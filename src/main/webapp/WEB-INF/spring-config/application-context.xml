@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--
+    MemberDAOImpl에 @Repository애너테이션 설정을 했더라도,
+    스프링에서 해당 패키지를 스캔하지 않으면 스프링의 빈으로 등록되지 못하기 때문에
+    아래와 같이 작성을 반드시 해줘야한다.
+    -->
+    <context:component-scan base-package="demos.common.web.tutorial"/>
+
+    <!--DataSource 설정-->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <!--<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/small_project?serverTimezone=UTC"/>-->
+        <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
+        <property name="url" value="jdbc:log4jdbc:mysql://127.0.0.1:3306/small_project?serverTimezone=UTC"/>
+        <property name="username" value="root"/>
+        <property name="password" value="1111"/>
+    </bean>
+
+    <!--SqlSessionFactory 설정 : dataSource를 참조, mybatis-config.xml 경로설정-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:/mybatis-config.xml"/>
+        <!-- mapper 경로 추가 : MyBatis가 XML Mapper를 인식할 수 있도록 -->
+        <property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"/>
+    </bean>
+    <!--
+         MyBatis에서 DAO를 이용하는 경우 SqlSessionTemplate을 이용해 DAO를 구현하기 때문에
+         DAO인터페이스를 구현하기에 앞서 SqlSessionTemplate설정을 먼저 해줘야한다.
+         DAO작업에서 가장 번거로운 작업은 데이터베이스와 연결을 맺고, 작업이 완료된 후 연결을 close()하는 작업인데
+         mybatis-spring라이브러리는 이것을 처리할 수 있는 SqlSessionTemplate이라는 클래스를 통해 DB를 연결하고, 종료하는 작업을 처리 할 수있다.
+         SqlSessionTemplate은 SqlSession인터페이스를 구현한 클래스로 기본적인 트랜잭션의 관리나 쓰레드 처리의 안정성을 보장해주고, DB의 연결과 종료를 책임진다.
+         SqlSessionTemplate설정은 applicationContext.xml에서 SqlSessionFactory를 생성자로 주입해서 아래와 같이 설정해준다.
+     -->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+</beans>
