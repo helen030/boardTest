@@ -1,0 +1,7 @@
+###Intellij###
+.idea/
+libs/
+lib/
+*.class
+*.jar
+*.war
