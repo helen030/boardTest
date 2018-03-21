@@ -5,3 +5,4 @@ lib/
 *.class
 *.jar
 *.war
+*.md
