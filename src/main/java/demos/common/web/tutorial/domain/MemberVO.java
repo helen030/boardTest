@@ -15,4 +15,5 @@ public class MemberVO {
     private Date updatedate; // 수정일자
 
     // getter, setter, toString() ...
+    
 }
