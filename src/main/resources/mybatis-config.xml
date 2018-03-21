@@ -3,15 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <!-- `resultType`을 `typeAliases`을 통해 간결하게 작성하는 법 -->
     <!--패키지명 등록-->
     <typeAliases>
-        <typeAlias type="demos.common.web.tutorial.MemberVO" alias="MemberVO"/>
+        <typeAlias type="demos.common.web.domain.MemberVO" alias="MemberVO"/>
+        <typeAlias type="demos.common.web.domain.ArticleVO" alias="ArticleVO"/>
     </typeAliases>
 
-    <!--<typeAliases>-->
-        <!--<typeAlias type="com.doubles.mvcboard.article.domain.ArticleVO" alias="ArticleVO"/>-->
-        <!--<typeAlias type="com.doubles.mvcboard.reply.domain.ReplyVO" alias="ReplyVO"/>-->
-        <!--<typeAlias type="com.doubles.mvcboard.tutorial.domain.MessageVO" alias="MessageVO"/>-->
-        <!--<typeAlias type="com.doubles.mvcboard.tutorial.domain.UserVO" alias="UserVO"/>-->
-    <!--</typeAliases>-->
+
 </configuration>

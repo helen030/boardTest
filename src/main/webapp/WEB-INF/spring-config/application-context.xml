@@ -9,7 +9,7 @@
     스프링에서 해당 패키지를 스캔하지 않으면 스프링의 빈으로 등록되지 못하기 때문에
     아래와 같이 작성을 반드시 해줘야한다.
     -->
-    <context:component-scan base-package="demos.common.web.tutorial"/>
+    <context:component-scan base-package="demos.common.web"/>
 
     <!--DataSource 설정-->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -26,7 +26,7 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:/mybatis-config.xml"/>
         <!-- mapper 경로 추가 : MyBatis가 XML Mapper를 인식할 수 있도록 -->
-        <property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"/>
+        <property name="mapperLocations" value="classpath:/mappers/*Mapper.xml"/>
     </bean>
     <!--
          MyBatis에서 DAO를 이용하는 경우 SqlSessionTemplate을 이용해 DAO를 구현하기 때문에

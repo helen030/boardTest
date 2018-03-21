@@ -1,5 +1,5 @@
-import demos.common.web.tutorial.MemberVO;
-import demos.common.web.tutorial.persistence.MemberDAO;
+import demos.common.web.domain.MemberVO;
+import demos.common.web.persistence.MemberDAO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

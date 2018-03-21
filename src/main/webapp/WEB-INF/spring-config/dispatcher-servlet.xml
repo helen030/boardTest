@@ -39,4 +39,13 @@
             </beans:list>
         </beans:property>
     </beans:bean>
+
+    <!--
+    정적 자원 등록 :
+    https://adminlte.io/docs/2.4/installation 에서 다운로드 한다.
+    admin lte download file 중 bower_components , plugins , dist 를  webapp/resources 폴더에 붙여 넣는다.-->
+    <resources mapping="/bower_components/**" location="/resources/bower_components/"/>
+    <resources mapping="/plugins/**" location="/resources/plugins/"/>
+    <resources mapping="/dist/**" location="/resources/dist/"/>
+
 </beans:beans>
