@@ -10,20 +10,21 @@
     </select>
 
     <insert id="create">
-        INSERT INTO tbl_article (
-        article_no
-        , title
-        , content
-        , writer
-        , regdate
-        , viewcnt
-        ) VALUES (
-        #{articleNo}
-        , #{title}
-        , #{content}
-        , #{writer}
-        , #{regDate}
-        , #{viewCnt}
+        INSERT INTO tbl_article
+        (
+            title,
+            content,
+            writer,
+            regdate,
+            viewcnt
+        )
+        VALUES
+        (
+            #{title},
+            #{content},
+            #{writer},
+            #{regDate},
+            #{viewCnt}
         )
     </insert>
 
@@ -54,19 +55,12 @@
         WHERE article_no = #{articleNo}
     </delete>
 
-    <select id="listAll" resultType="ArticleVO">
-        <![CDATA[
+    <select id="listAll" resultMap="ArticleResultMap">
         SELECT
-            article_no,
-            title,
-            content,
-            writer,
-            regdate,
-            viewcnt
+            *
         FROM tbl_article
-        WHERE article_no > 0
+        WHERE article_no <![CDATA[ >]]> 0
         ORDER BY article_no DESC, regdate DESC
-        ]]>
     </select>
 
     <!-- 자바객체의 필드변수명과 DB의 칼럼명이 불일치할 경우의 처리방법 -->
