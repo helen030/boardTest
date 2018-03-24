@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- `resultType`을 `typeAliases`을 통해 간결하게 작성하는 법 -->
+    <!--패키지명 등록-->
+    <typeAliases>
+        <typeAlias type="demos.common.web.domain.MemberVO" alias="MemberVO"/>
+        <typeAlias type="demos.common.web.domain.ArticleVO" alias="ArticleVO"/>
+    </typeAliases>
+
+
+</configuration>
