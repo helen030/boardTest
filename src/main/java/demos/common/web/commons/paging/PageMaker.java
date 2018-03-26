@@ -1,5 +1,8 @@
 package demos.common.web.commons.paging;
 
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 /**
  * 기본생성자,
  * 현재페이지 = 1
@@ -52,6 +55,19 @@ public class PageMaker {
 
        //다음링크 는 끝페이지 * 페이지당 출력할 게시글 갯수 >= 전체개시글 갯수 ? false : true
        next = endPage * criteria.getPerPageNum() >= totalCount ? false : true ;
+    }
+
+    //UriComponentsBuilder 를 이용하기 위해 추가하였다.
+    //자동으로 uri 를 생성해 전달 준다...
+    public String makeQuery(int page){
+        //Criteria criteria = new Criteria();
+        UriComponents uriComponents = UriComponentsBuilder.newInstance()
+                .queryParam("page" , page)
+                .queryParam("perPageNum",criteria.getPerPageNum())
+                .build();
+
+        return uriComponents.toUriString();
+
     }
 
     public int getTotalCount() {
