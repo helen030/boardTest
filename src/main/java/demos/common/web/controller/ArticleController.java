@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,13 +67,6 @@ public class ArticleController {
 
         return "/article/list";
     }
-//
-//    @RequestMapping(value = "/listCriteria", method = RequestMethod.GET)
-//    public String listCriteria(Model model, Criteria criteria) throws Exception{
-//        logger.info("listCriteria");
-//        model.addAttribute("articles", articleService.listCriteria(criteria));
-//        return "/article/list_criteria";
-//    }
 
     // 이 멍충이가 pageMaker 에 get/set을 안만들어서 오전을 다 날리고......
     @RequestMapping(value = "/listPaging", method = RequestMethod.GET)
@@ -153,6 +147,72 @@ public class ArticleController {
         return "redirect:/article/list";
     }
 
+
+    /*****************************************************************************************/
+    /**
+     * 특정 목록페이지에서
+     * 특정 게시글을 조회, 수정, 삭제한 뒤
+     * 다시 목록을 이동할 때
+     * 특정 목록페이지로 다시 이동하도록 구현
+     *
+     * 현재 목록페이지의 번호(page), 페이지당 출력할 게시글의 갯수(perPageNum), 조회게시글의 번호(articleNo) 를
+     * 페이지 이동시마다 가지고 있어야 하므로
+     * 게시글 조회, 수정, 삭제 메서드에 Criteria 타입의 criteria변수를 파라미터로 추가 시켜주고,
+     * 각 JSP페이지에 값들을 <form>태그안에 hidden값으로 세팅해줘야 한다.
+     * */
+
+    //조회
+    @RequestMapping(value = "/readPaging", method = RequestMethod.GET)
+    public String readPaging(@RequestParam("articleNo") int articleNo,
+                             @ModelAttribute("criteria") Criteria criteria,
+                             Model model) throws Exception {
+
+        model.addAttribute("article", articleService.read(articleNo));
+
+        return "/article/read_paging";
+    }
+
+    //수정 GET 타입
+    @RequestMapping(value = "/modifyPaging", method = RequestMethod.GET)
+    public String modifyGETPaging(@RequestParam("articleNo") int articleNo,
+                                  @ModelAttribute("criteria") Criteria criteria,
+                                  Model model) throws Exception {
+
+        logger.info("modifyGetPaging ...");
+        model.addAttribute("article", articleService.read(articleNo));
+
+        return "/article/modify_paging";
+    }
+
+    //수정 POST 타입
+    @RequestMapping(value = "/modifyPaging", method = RequestMethod.POST)
+    public String modifyPOSTPaging(ArticleVO articleVO,
+                                   Criteria criteria,
+                                   RedirectAttributes redirectAttributes) throws Exception {
+
+        logger.info("modifyPOSTPaging ...");
+        articleService.update(articleVO);
+        redirectAttributes.addAttribute("page", criteria.getPage());
+        redirectAttributes.addAttribute("perPageNum", criteria.getPerPageNum());
+        redirectAttributes.addFlashAttribute("msg", "modSuccess");
+
+        return "redirect:/article/listPaging";
+    }
+
+    //삭제
+    @RequestMapping(value = "/removePaging", method = RequestMethod.POST)
+    public String removePaging(@RequestParam("articleNo") int articleNo,
+                               Criteria criteria,
+                               RedirectAttributes redirectAttributes) throws Exception {
+
+        logger.info("remove ...");
+        articleService.delete(articleNo);
+        redirectAttributes.addAttribute("page", criteria.getPage());
+        redirectAttributes.addAttribute("perPageNum", criteria.getPerPageNum());
+        redirectAttributes.addFlashAttribute("msg", "delSuccess");
+
+        return "redirect:/article/listPaging";
+    }
 
 
 }

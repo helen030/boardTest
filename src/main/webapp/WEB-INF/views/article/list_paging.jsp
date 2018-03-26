@@ -42,7 +42,13 @@
                             <c:forEach items="${articles}" var="article">
                                 <tr>
                                     <td>${article.articleNo}</td>
-                                    <td><a href="${path}/article/read?articleNo=${article.articleNo}">${article.title}</a></td>
+
+                                    <%-- 파라미터 를 get 방식으로 보냄 --%>
+                                    <%--<td><a href="${path}/article/read?articleNo=${article.articleNo}">${article.title}</a></td>--%>
+
+                                    <%-- 파라미터 를 UriComponentsBuilder 를 이용한  방식으로 보냄 --%>
+                                    <td><a href="${path}/article/readPaging${pageMaker.makeQuery(pageMaker.criteria.page)}&articleNo=${article.articleNo}">${article.title}</a></td>
+
                                     <td>${article.writer}</td>
                                     <td><fmt:formatDate value="${article.regDate}" pattern="yyyy-MM-dd a HH:mm"/></td>
                                     <td><span class="badge bg-red">${article.viewCnt}</span></td>
@@ -53,7 +59,9 @@
                     </div>
                     <div class="box-footer">
                         <div class="text-center">
-                            <ul class="pagination">
+                            <p> 1. 파라미터 를 get 방식으로 보냄 </p>
+                            <%-- 주소 창에 page 만 보임
+                            <ul class="pagination ">
                                 <c:if test="${pageMaker.prev}">
                                     <li><a href="${path}/article/listPaging?page=${pageMaker.startPage - 1}">이전</a></li>
                                 </c:if>
@@ -65,8 +73,48 @@
                                 <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
                                     <li><a href="${path}/article/listPaging?page=${pageMaker.endPage + 1}">다음</a></li>
                                 </c:if>
+                            </ul>--%>
+
+                            <p> 2. 파라미터 를 UriComponentsBuilder 를 이용한 방식으로 보냄 </p>
+                            <%-- 주소 창에 page, perPageNum 이 같이 연동됨 --%>
+                            <ul class="pagination">
+                                <c:if test="${pageMaker.prev}">
+                                    <li><a href="${path}/article/listPaging${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전</a></li>
+                                </c:if>
+                                <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+                                    <li <c:out value="${pageMaker.criteria.page == idx ? 'class=active' : ''}"/>>
+                                        <a href="${path}/article/listPaging${pageMaker.makeQuery(idx)}">${idx}</a>
+                                    </li>
+                                </c:forEach>
+                                <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                                    <li><a href="${path}/article/listPaging${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음</a></li>
+                                </c:if>
                             </ul>
+
+                            <p> 3. 파라미터 를 javascript 를 이용한 방식으로 보냄 </p>
+                            <%-- 3. 페이지에서 일어나는 이벤트 를 제어 하므로 href 의 속성을 단순히 페이지번호만을 의미하도록 변경하여야 한다. --%>
+                            <%--<ul class="pagination">
+                                <c:if test="${pageMaker.prev}">
+                                    <li><a href="${pageMaker.startPage - 1}">이전</a></li>
+                                </c:if>
+                                <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+                                    <li <c:out value="${pageMaker.criteria.page == idx ? 'class=active' : ''}"/>>
+                                        <a href="${idx}">${idx}</a>
+                                    </li>
+                                </c:forEach>
+                                <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                                    <li><a href="${pageMaker.endPage + 1}">다음</a></li>
+                                </c:if>
+                            </ul>--%>
+                            <%-- 3. 자바스크립트를 이용 할 경우 page와 perPageNum값을 넘겨주도록 한다  --%>
+                            <%--<form id="listPageForm">
+                                <input type="hidden" name="page" value="${pageMaker.criteria.page}">
+                                <input type="hidden" name="perPageNum" value="${pageMaker.criteria.perPageNum}">
+                            </form>--%>
+
                         </div>
+
+
                         <div class="pull-right">
                             <button type="button" class="btn btn-success btn-flat" id="writeBtn">
                                 <i class="fa fa-pencil"></i> 글쓰기
@@ -74,9 +122,6 @@
                         </div>
                     </div>
                 </div>
-                <%--<div class="box-footer">--%>
-
-                <%--</div>--%>
             </div>
         </section>
         <!-- /.content -->
@@ -99,6 +144,18 @@
         $(".btn-flat").on("click", function () {
             self.location = "/article/write"
         });
+
+
+        <%-- 3. 자바스크립트를 이용 할 경우 이벤트를 처리할 자바스크립트 코드를 작성해준다.
+        $(".pagination li a").on("click", function (event) {
+            event.preventDefault();
+            var targetPage = $(this).attr("href");
+            var listPageForm = $("#listPageForm");
+            listPageForm.find("[name='page']").val(targetPage);
+            listPageForm.attr("action", "/article/listPaging").attr("method", "get");
+            listPageForm.submit();
+        });
+        --%>
     })
 
 </script>
