@@ -74,6 +74,7 @@ public class ArticleController {
 //        return "/article/list_criteria";
 //    }
 
+    // 이 멍충이가 pageMaker 에 get/set을 안만들어서 오전을 다 날리고......
     @RequestMapping(value = "/listPaging", method = RequestMethod.GET)
     public String listPaging(Model model, Criteria criteria) throws Exception {
         logger.info("listPaging ...");

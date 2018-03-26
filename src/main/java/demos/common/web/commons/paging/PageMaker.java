@@ -53,4 +53,65 @@ public class PageMaker {
        //다음링크 는 끝페이지 * 페이지당 출력할 게시글 갯수 >= 전체개시글 갯수 ? false : true
        next = endPage * criteria.getPerPageNum() >= totalCount ? false : true ;
     }
+
+    public int getTotalCount() {
+        return totalCount;
+    }
+
+    public int getStartPage() {
+        return startPage;
+    }
+
+    public void setStartPage(int startPage) {
+        this.startPage = startPage;
+    }
+
+    public int getEndPage() {
+        return endPage;
+    }
+
+    public void setEndPage(int endPage) {
+        this.endPage = endPage;
+    }
+
+    public boolean isPrev() {
+        return prev;
+    }
+
+    public void setPrev(boolean prev) {
+        this.prev = prev;
+    }
+
+    public boolean isNext() {
+        return next;
+    }
+
+    public void setNext(boolean next) {
+        this.next = next;
+    }
+
+    public int getDisplayPageNum() {
+        return displayPageNum;
+    }
+
+    public void setDisplayPageNum(int displayPageNum) {
+        this.displayPageNum = displayPageNum;
+    }
+
+    public Criteria getCriteria() {
+        return criteria;
+    }
+
+    @Override
+    public String toString() {
+        return "PageMaker{" +
+                "totalCount=" + totalCount +
+                ", startPage=" + startPage +
+                ", endPage=" + endPage +
+                ", prev=" + prev +
+                ", next=" + next +
+                ", displayPageNum=" + displayPageNum +
+                ", criteria=" + criteria +
+                '}';
+    }
 }

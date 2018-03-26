@@ -24,8 +24,6 @@
 
         <!-- Main content -->
         <section class="content container-fluid">
-
-
             <div class="col-lg-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
@@ -58,7 +56,7 @@
                             <ul class="pagination">
                                 <c:if test="${pageMaker.prev}">
                                     <li><a href="${path}/article/listPaging?page=${pageMaker.startPage - 1}">이전</a></li>
-                                </c:if>ㄴ
+                                </c:if>
                                 <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
                                     <li <c:out value="${pageMaker.criteria.page == idx ? 'class=active' : ''}"/>>
                                         <a href="${path}/article/listPaging?page=${idx}">${idx}</a>
@@ -69,8 +67,6 @@
                                 </c:if>
                             </ul>
                         </div>
-                    </div>
-                    <div class="box-footer">
                         <div class="pull-right">
                             <button type="button" class="btn btn-success btn-flat" id="writeBtn">
                                 <i class="fa fa-pencil"></i> 글쓰기
@@ -78,11 +74,14 @@
                         </div>
                     </div>
                 </div>
+                <%--<div class="box-footer">--%>
+
+                <%--</div>--%>
             </div>
         </section>
         <!-- /.content -->
     </div>
-    <%@ include file="../include/footer.jsp"%>
+    <%@ include file="../include/footer.jsp"%>ㅍ
 </div>
 <!-- ./wrapper -->
 <%@ include file="../include/plugin_js.jsp"%>
