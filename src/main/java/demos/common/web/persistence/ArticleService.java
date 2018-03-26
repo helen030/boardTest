@@ -1,5 +1,6 @@
 package demos.common.web.persistence;
 
+import demos.common.web.commons.paging.Criteria;
 import demos.common.web.domain.ArticleVO;
 
 import java.util.List;
@@ -22,6 +23,10 @@ public interface ArticleService {
     void delete(Integer articleNo) throws Exception;
 
     List<ArticleVO> listAll() throws Exception;
+
+    List<ArticleVO> listCriteria(Criteria criteria) throws Exception;
+
+    int countArticles(Criteria criteria) throws Exception;
 }
 
 /**

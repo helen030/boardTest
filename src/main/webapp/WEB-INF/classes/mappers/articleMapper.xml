@@ -63,6 +63,31 @@
         ORDER BY article_no DESC, regdate DESC
     </select>
 
+    <select id="listPaging" resultMap="ArticleResultMap">
+        SELECT
+        *
+        FROM tbl_article
+        WHERE article_no <![CDATA[ >]]> 0
+        ORDER BY article_no DESC, regdate DESC
+        LIMIT #{page}, 10
+    </select>
+
+    <select id="listCriteria" resultMap="ArticleResultMap">
+        SELECT
+        *
+        FROM tbl_article
+        WHERE article_no <![CDATA[ >]]> 0
+        ORDER BY article_no DESC, regdate DESC
+        LIMIT #{pageStart}, #{perPageNum}
+    </select>
+
+    <select id="countArticles" resultType="Integer">
+        SELECT
+            COUNT(article_no)
+        FROM tbl_article
+        WHERE article_no <![CDATA[ > ]]> 0
+    </select>
+
     <!-- 자바객체의 필드변수명과 DB의 칼럼명이 불일치할 경우의 처리방법 -->
     <resultMap id="ArticleResultMap" type="ArticleVO">
         <id property="articleNo" column="article_no"/><!-- 컬럼에 언더스코어(_) 가 있다면 쿼리에서 AS 를 사용해주거나 왼쪽과같이 resultMap을 통해 DB칼럼명과 자바변수명을 일치시켜주는 작업을 해고, <select>태그 에서 resultType 속성 대신,  ㄱㄷ녀ㅣ스메 속성으로 변경해주면 해결 할 수 있다. -->

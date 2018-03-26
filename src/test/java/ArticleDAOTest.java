@@ -1,3 +1,4 @@
+import demos.common.web.commons.paging.Criteria;
 import demos.common.web.domain.ArticleVO;
 import demos.common.web.domain.MemberVO;
 import demos.common.web.persistence.ArticleDAO;
@@ -10,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.inject.Inject;
+import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring-config/application-context.xml"})
@@ -53,6 +55,44 @@ public class ArticleDAOTest {
     @Test
     public void testDelete() throws Exception {
         articleDAO.delete(1);
+    }
+
+
+    @Test
+    public void tesTCreate() throws Exception {
+
+        logger.info("start - logger msg");
+        for(int a = 0 ; a < 1000 ; a++){
+            ArticleVO article = new ArticleVO();
+            article.setTitle(a + "번째 " + "제목");
+            article.setContent(a + "번째 " + "내용");
+            article.setWriter(a + "번째 " + "작성자");
+            articleDAO.create(article);
+        }
+        logger.info("end - logger msg");
+
+    }
+
+    @Test
+    public void testListPaging() throws Exception{
+        int page = 3;
+        List<ArticleVO> articles = articleDAO.listPaging(page);
+        for(ArticleVO ar: articles){
+          logger.info(ar.getArticleNo() + ":" + ar.getTitle());
+        }
+    }
+
+    @Test
+    public void testListCriteria() throws Exception{
+        Criteria criteria = new Criteria();
+        criteria.setPage(3);
+        criteria.setPerPageNum(20);
+
+        List<ArticleVO> articles = articleDAO.listCriteria(criteria);
+
+        for(ArticleVO ar: articles){
+            logger.info(ar.getArticleNo() + ":" + ar.getTitle());
+        }
     }
 
 }

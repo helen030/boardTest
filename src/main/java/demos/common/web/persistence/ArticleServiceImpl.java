@@ -1,5 +1,6 @@
 package demos.common.web.persistence;
 
+import demos.common.web.commons.paging.Criteria;
 import demos.common.web.domain.ArticleVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -42,4 +43,16 @@ public class ArticleServiceImpl implements ArticleService {
     public List<ArticleVO> listAll() throws Exception {
         return articleDAO.listAll();
     }
+
+    @Override
+    public List<ArticleVO> listCriteria(Criteria criteria) throws Exception {
+        return articleDAO.listCriteria(criteria);
+    }
+
+    @Override
+    public int countArticles(Criteria criteria) throws Exception {
+        return articleDAO.countArticles(criteria);
+    }
+
 }
+
