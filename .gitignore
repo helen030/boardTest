@@ -2,6 +2,9 @@
 .idea/
 libs/
 lib/
+js/
+META-INF/
+classes/
 *.class
 *.jar
 *.war
