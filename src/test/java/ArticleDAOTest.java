@@ -1,4 +1,5 @@
 import demos.common.web.commons.paging.Criteria;
+import demos.common.web.commons.paging.SearchCriteria;
 import demos.common.web.domain.ArticleVO;
 import demos.common.web.domain.MemberVO;
 import demos.common.web.persistence.ArticleDAO;
@@ -93,6 +94,27 @@ public class ArticleDAOTest {
         for(ArticleVO ar: articles){
             logger.info(ar.getArticleNo() + ":" + ar.getTitle());
         }
+    }
+
+    @Test
+    public void testDynamic1() throws Exception {
+
+        SearchCriteria searchCriteria = new SearchCriteria();
+        searchCriteria.setPage(1);
+        searchCriteria.setKeyword("제목");
+        searchCriteria.setSearchType("t");
+
+        logger.info("======================");
+
+        List<ArticleVO> articles = articleDAO.listSearch(searchCriteria);
+
+        for (ArticleVO article : articles) {
+            logger.info(article.getArticleNo() + " : " + article.getTitle());
+        }
+
+        logger.info("======================");
+
+        logger.info("searched articles count : " + articleDAO.countSearchedArticles(searchCriteria));
     }
 
 }

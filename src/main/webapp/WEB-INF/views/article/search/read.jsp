@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <%@ include file="../include/plugin_js.jsp"%>
+    <%@ include file="../../include/plugin_js.jsp"%>
     <script>
         $(function () {
 
@@ -10,30 +10,30 @@
             console.log(formObj);
 
             $(".modBtn").on("click", function () {
-                formObj.attr("action", "/article/modifyPaging");
+                formObj.attr("action", "/article/paging/search/modify");
                 formObj.attr("method", "get");
                 formObj.submit();
             });
 
             $(".delBtn").on("click", function () {
-                formObj.attr("action", "/article/removePaging");
+                formObj.attr("action", "/article/paging/search/remove");
                 formObj.submit();
             });
 
             $(".listBtn").on("click", function () {
                 formObj.attr("method", "get");
-                formObj.attr("action", "/article/listPaging");
+                formObj.attr("action", "/article/paging/search/list");
                 formObj.submit();
             });
 
         });
     </script>
 </head>
-<%@ include file="../include/head.jsp"%>
+<%@ include file="../../include/head.jsp"%>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-    <%@ include file="../include/header.jsp"%>
-    <%@ include file="../include/left.jsp"%>
+    <%@ include file="../../include/header.jsp"%>
+    <%@ include file="../../include/left.jsp"%>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -73,7 +73,9 @@
                             <%-- 목록페이지의 정보를 저장하기위해  JSP 추가 --%>
                             <input type="hidden" name="page" value="${criteria.page}">
                             <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
-
+                            <%-- 키워드 검색 추가 --%>
+                            <input type="hidden" name="searchType" value="${searchCriteria.searchType}">
+                            <input type="hidden" name="keyword" value="${searchCriteria.keyword}">
                         </form>
                         <button type="submit" class="btn btn-primary listBtn"><i class="fa fa-list"></i> 목록</button>
                         <div class="pull-right">
@@ -86,7 +88,7 @@
         </section>
         <!-- /.content -->
     </div>
-    <%@ include file="../include/footer.jsp"%>
+    <%@ include file="../../include/footer.jsp"%>
 </div>
 <!-- ./wrapper -->
 

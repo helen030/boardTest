@@ -1,11 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
-<%@ include file="../include/head.jsp"%>
+<%@ include file="../../include/head.jsp"%>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-    <%@ include file="../include/header.jsp"%>
-    <%@ include file="../include/left.jsp"%>
+    <%@ include file="../../include/header.jsp"%>
+    <%@ include file="../../include/left.jsp"%>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -23,7 +23,7 @@
         <!-- Main content -->
         <section class="content container-fluid">
             <div class="col-lg-12">
-                <form role="form" id="writeForm" method="post" action="${path}/article/write">
+                <form role="form" id="writeForm" method="post" action="${path}/article/paging/search/write">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">게시글 작성</h3>
@@ -56,10 +56,10 @@
         </section>
         <!-- /.content -->
     </div>
-    <%@ include file="../include/footer.jsp"%>
+    <%@ include file="../../include/footer.jsp"%>
 </div>
 <!-- ./wrapper -->
-<%@ include file="../include/plugin_js.jsp"%>
+<%@ include file="../../include/plugin_js.jsp"%>
 </body>
 </html>
 

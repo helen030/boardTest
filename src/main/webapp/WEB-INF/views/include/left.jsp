@@ -56,10 +56,45 @@
 
             <!-- board 구현용 side메뉴 사용 을 위해.. -->
             <li class="header">메뉴</li>
-            <li class="active"><a href="${path}/article/write"><i class="fa fa-edit"></i> <span>게시글 작성</span></a></li>
-            <li><a href="${path}/article/list"><i class="fa fa-list"></i> <span>게시글 목록</span></a></li>
-            <li><a href="${path}/article/listPaging"><i class="fa fa-list"></i> <span>게시글 목록</span></a></li>
+            <%--<li class="active"><a href="${path}/article/write"><i class="fa fa-edit"></i> <span>게시글 작성</span></a></li>
+            <li><a href="ㅊ"><i class="fa fa-list"></i> <span>게시글 목록</span></a></li>
+            <li><a href="${path}/article/listPaging"><i class="fa fa-list"></i> <span>게시글 목록</span></a></li>--%>
+            <li class="treeview">
+                <a href="#"><i class="fa fa-link"></i> <span>게시판(기본)</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="${path}/article/normal/write">게시글 작성</a></li>
+                    <li><a href="${path}/article/normal/list">게시글 목록</a></li>
+                </ul>
+            </li>
 
+            <li class="treeview">
+                <a href="#"><i class="fa fa-link"></i> <span>게시판(페이징)</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="${path}/article/paging/write">게시글 작성</a></li>
+                    <li><a href="${path}/article/paging/list">게시글 목록</a></li>
+                </ul>
+            </li>
+
+
+            <li class="treeview">
+                <a href="#"><i class="fa fa-link"></i> <span>게시판(페이징 + 검색)</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="${path}/article/paging/search/write">게시글 작성</a></li>
+                    <li><a href="${path}/article/paging/search/list">게시글 목록</a></li>ㅍ
+                </ul>
+            </li>
         </ul>
         <!-- /.sidebar-menu -->
     </section>

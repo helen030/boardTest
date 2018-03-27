@@ -3,6 +3,9 @@ package demos.common.web.commons.paging;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 /**
  * 기본생성자,
  * 현재페이지 = 1
@@ -67,7 +70,31 @@ public class PageMaker {
                 .build();
 
         return uriComponents.toUriString();
+    }
 
+    public String makeSearch(int page){
+        //Criteria criteria = new Criteria();
+        UriComponents uriComponents = UriComponentsBuilder.newInstance()
+                .queryParam("page" , page)
+                .queryParam("perPageNum",criteria.getPerPageNum())
+                .queryParam("searchType",((SearchCriteria) criteria).getSearchType())//검색의 표시를 위해 URI자동생성 메서드를 추가한다.
+                .queryParam("keyword", encoding(((SearchCriteria) criteria).getKeyword()))
+                .build();
+
+        return uriComponents.toUriString();
+    }
+
+    //검색 키워드를 인코딩처리를 위한 로직을 구현한다.
+    private String encoding(String keyword){
+        if(keyword == null || keyword.trim().length() ==0){
+            return "";
+        }
+
+        try{
+            return URLEncoder.encode(keyword,"UTF-8");
+        }catch (UnsupportedEncodingException e){
+            return "";
+        }
     }
 
     public int getTotalCount() {

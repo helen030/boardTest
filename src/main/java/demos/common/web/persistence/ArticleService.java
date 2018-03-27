@@ -1,6 +1,7 @@
 package demos.common.web.persistence;
 
 import demos.common.web.commons.paging.Criteria;
+import demos.common.web.commons.paging.SearchCriteria;
 import demos.common.web.domain.ArticleVO;
 
 import java.util.List;
@@ -27,6 +28,10 @@ public interface ArticleService {
     List<ArticleVO> listCriteria(Criteria criteria) throws Exception;
 
     int countArticles(Criteria criteria) throws Exception;
+
+    List<ArticleVO> listSearch(SearchCriteria searchCriteria) throws Exception;
+
+    int countSearchedArticles(SearchCriteria searchCriteria) throws Exception;
 }
 
 /**

@@ -1,6 +1,7 @@
 package demos.common.web.persistence;
 
 import demos.common.web.commons.paging.Criteria;
+import demos.common.web.commons.paging.SearchCriteria;
 import demos.common.web.domain.ArticleVO;
 import demos.common.web.domain.MemberVO;
 import org.apache.ibatis.session.SqlSession;
@@ -77,6 +78,16 @@ public class ArticleDAOImpl implements ArticleDAO {
     @Override
     public int countArticles(Criteria criteria) throws Exception {
         return sqlSession.selectOne(NAMESPACE + ".countArticles", criteria);
+    }
+
+    @Override
+    public List<ArticleVO> listSearch(SearchCriteria searchCriteria) throws Exception {
+        return sqlSession.selectList(NAMESPACE + ".listSearch", searchCriteria);
+    }
+
+    @Override
+    public int countSearchedArticles(SearchCriteria searchCriteria) throws Exception {
+        return sqlSession.selectOne(NAMESPACE + ".countSearchedArticles", searchCriteria);
     }
 
 

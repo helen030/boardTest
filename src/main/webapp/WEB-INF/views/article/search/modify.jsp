@@ -1,11 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
-<%@ include file="../include/head.jsp"%>
+<%@ include file="../../include/head.jsp"%>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-    <%@ include file="../include/header.jsp"%>
-    <%@ include file="../include/left.jsp"%>
+    <%@ include file="../../include/header.jsp"%>
+    <%@ include file="../../include/left.jsp"%>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -25,13 +25,18 @@
 
 
             <div class="col-lg-12">
-                <form role="form" id="writeForm" method="post" action="${path}/article/modifyPaging">
+                <form role="form" id="writeForm" method="post" action="${path}/article/paging/search/modify">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">게시글 작성</h3>
                         </div>
                         <div class="box-body">
                             <input type="hidden" name="articleNo" value="${article.articleNo}">
+                            <input type="hidden" name="page" value="${searchCriteria.page}">
+                            <input type="hidden" name="perPageNum" value="${searchCriteria.perPageNum}">
+                            <input type="hidden" name="searchType" value="${searchCriteria.searchType}">
+                            <input type="hidden" name="keyword" value="${searchCriteria.keyword}">
+
                             <div class="form-group">
                                 <label for="title">제목</label>
                                 <input class="form-control" id="title" name="title" placeholder="제목을 입력해주세요" value="${article.title}">
@@ -44,10 +49,6 @@
                             <div class="form-group">
                                 <label for="writer">작성자</label>
                                 <input class="form-control" id="writer" name="writer" value="${article.writer}" readonly>
-
-                                <input type="hidden" name="page" value="${criteria.page}">
-                                <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
-
                             </div>
                         </div>
                         <div class="box-footer">
@@ -63,10 +64,10 @@
         </section>
         <!-- /.content -->
     </div>
-    <%@ include file="../include/footer.jsp"%>
+    <%@ include file="../../include/footer.jsp"%>
 </div>
 <!-- ./wrapper -->
-<%@ include file="../include/plugin_js.jsp"%>
+<%@ include file="../../include/plugin_js.jsp"%>
 <script>
     $(function () {
 
@@ -74,8 +75,8 @@
         console.log(formObj);
 
         $(".modBtn").on("click", function () {
-            formObj.attr("action", "/article/modifyPaging");
-            formObj.attr("method", "post");
+            // formObj.attr("action", "/article/paging/search/modify");
+            // formObj.attr("method", "post");
             formObj.submit();
         });
 
@@ -84,9 +85,10 @@
         });
 
         $(".listBtn").on("click", function () {
-            formObj.attr("method", "get");
-            formObj.attr("action", "/article/listPaging");
-            formObj.submit();
+            self.location = "/article/paging/search/list?page=${searchCriteria.page}"
+                + "&perPageNum=${searchCriteria.perPageNum}"
+                + "&searchType=${searchCriteria.searchType}"
+                + "&keyword=${searchCriteria.keyword}";
         });
 
     });

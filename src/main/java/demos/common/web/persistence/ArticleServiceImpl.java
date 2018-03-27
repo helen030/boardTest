@@ -1,6 +1,7 @@
 package demos.common.web.persistence;
 
 import demos.common.web.commons.paging.Criteria;
+import demos.common.web.commons.paging.SearchCriteria;
 import demos.common.web.domain.ArticleVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -52,6 +53,16 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public int countArticles(Criteria criteria) throws Exception {
         return articleDAO.countArticles(criteria);
+    }
+
+    @Override
+    public List<ArticleVO> listSearch(SearchCriteria searchCriteria) throws Exception {
+        return articleDAO.listSearch(searchCriteria);
+    }
+
+    @Override
+    public int countSearchedArticles(SearchCriteria searchCriteria) throws Exception {
+        return articleDAO.countSearchedArticles(searchCriteria);
     }
 
 }
