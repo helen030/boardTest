@@ -13,3 +13,4 @@ mybatis 셋팅, mapper, log4j, slf4 ....
 
 기본 CRUD 
 페이징 처리
+검색처리
