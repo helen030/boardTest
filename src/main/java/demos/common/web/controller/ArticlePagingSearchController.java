@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.inject.Inject;
 
 @Controller
-@RequestMapping("article/paging/search")
+@RequestMapping("article/paging/search")//@RequestMapping : 응답을 수행할 HTTP 요청을 명시
 public class ArticlePagingSearchController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());

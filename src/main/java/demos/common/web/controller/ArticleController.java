@@ -9,10 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
@@ -74,6 +72,29 @@ public class ArticleController {
         model.addAttribute("article", articleService.read(articleNo));
 
         return "article/normal/read";
+    }
+
+    @RequestMapping(value = "/readResBody", method = RequestMethod.GET)
+    @ResponseBody
+    public ArticleVO readResBody(@RequestParam("articleNo") int articleNo,
+                       Model model) throws Exception {
+
+        logger.info("normal readResBody() called ...");
+        ArticleVO vo = articleService.read(articleNo);
+
+        return vo;
+    }
+
+    @RequestMapping(value = "/readResBodyMav", method = RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView readResBodyMav(@RequestParam("articleNo") int articleNo,
+                                       ModelAndView mav) throws Exception {
+
+        logger.info("normal readResBody() called ...");
+        mav.setViewName("article/normal/read");
+        mav.addObject("article", articleService.read(articleNo));
+
+        return mav;
     }
 
     @RequestMapping(value = "/modify", method = RequestMethod.GET)
