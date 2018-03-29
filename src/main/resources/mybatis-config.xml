@@ -8,6 +8,7 @@
     <typeAliases>
         <typeAlias type="demos.common.web.domain.MemberVO" alias="MemberVO"/>
         <typeAlias type="demos.common.web.domain.ArticleVO" alias="ArticleVO"/>
+        <typeAlias type="demos.common.web.domain.ReplyVO" alias="ReplyVO"/>
     </typeAliases>
 
 

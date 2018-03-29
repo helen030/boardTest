@@ -18,4 +18,11 @@ public class HomeController {
         model.addAttribute("greeting", "hello world");
         return "home";
     }
+
+    //임시 test...
+    @RequestMapping("/reply/test")
+    public String replyAjaxTest() throws Exception {
+        return "article/reply/reply_test";
+    }
+
 }
