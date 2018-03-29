@@ -94,14 +94,29 @@
 </body>
 <script>
     var articleNo = 1000;
+    var replyPageNum = 1;
+    //그냥 댓글리스트
     getReplies();
 
+    // 목록페이지 번호 변수 선언, 1로 초기화(첫번째 페이지)
+
+
+    //페이징 처리된 댓글 리스트
+    getRepliesPaging(replyPageNum);
+
+    // 목록페이지 번호 클릭 이벤트
+    $(".pagination").on("click", "li a", function (event) {
+        event.preventDefault();
+        replyPageNum = $(this).attr("href"); // 목록 페이지 번호 추출
+        getRepliesPaging(replyPageNum); // 목록 페이지 호출
+
+    });
+
+    //리스트 출력
     function getReplies() {
         //@RestController의 경우 객체를 JSON방식으로 전달하기 때문에
         // jQuery를 이용해서 호출할 때는 getJSON()를 아래와 같이 사용한다.
         $.getJSON("/replies/"+articleNo, function (data) {
-            console.log(data);
-
             var str = "";
             $(data).each(function () {//받아온 댓글 객체를 each()함수를 통해 루프를 돌면서 <li>태그를 만들어낸다.
                 //data-로 시작되는 속성은 이름이나 갯수에 상관없이 id나 name속성을 대신해서 사용하기에 편리하다.
@@ -112,16 +127,55 @@
                     +"</li>"
                     +"<hr/>";
             });
-
             $("#replies").html(str);
         });
     }
 
+
+    function getRepliesPaging(page) {
+        $.getJSON("/replies/"+articleNo + "/" + page, function (data) {
+            console.log(data);
+            var str = "";
+            $(data.replies).each(function () {
+                str += "<li data-replyNo = '"+this.replyNo+"' class='replyLi'>"
+                    +"<p class='replyText'>"+this.replyText+"</p>"
+                    +"<p class='replyWriter'>"+this.replyWriter+"</p>"
+                    +"<button type='button' class='btn btn-xs btn-success' data-toggle='modal' data-target='#modifyModal'>댓글 수정</button>"
+                    +"</li>"
+                    +"<hr/>";
+            });
+            $("#replies").html(str);
+            printPageNumbers(data.pageMake);
+        });
+    }
+
+    function printPageNumbers(pageMaker) {
+        var str = "";
+        console.log(pageMaker)
+        //이전 버튼 활성화
+        if(pageMaker.prev){
+            str += "<li><a href='"+(pageMaker.startPage -1)+"'>이전</a></li>";
+        }
+
+        for(var i = pageMaker.startPage, len = pageMaker.endPage; i <= len; i++){
+           var strClass = pageMaker.criteria.page == i ? 'class=active' : '';
+            str += "<li " +strClass + "><a href ='"+i+"'>" +i+"</a></li>";
+        }
+
+        //다음 버튼 활성화
+        if(pageMaker.next){
+            str += "<li><a href='"+(pageMaker.endPage +1)+"'>다음</a></li>";
+        }
+
+// console.log(str.html)
+        $(".pagination-sm").html(str);
+    }
+
+    //댓글입력
     $(".replyAddBtn").on("click", function () {
         //화면에서 입력받은 변수값 처리
         var replyText = $("#newReplyText");
         var replyWriter = $("#newReplyWriter");
-
         var replyTextVal = replyText.val();
         var replyWriterVal = replyWriter.val();
 
@@ -148,19 +202,23 @@
                 replyText.val("");// 댓글 내용 초기화a
                 replyWriter.val("");// 댓글 작성자 초기화
             }
-        })
-    })
+        });
+    });
 
+    //수정할 댓글선택
     $("#replies").on("click", ".replyLi button", function(){
+
         var reply = $(this).parent();
         var replyNo = reply.attr("data-replyNo");
         var replyText = reply.find(".replyText").text();
         var replyWriter = reply.find(".replyWriter").text();
+
         $("#replyNo").val(replyNo);
         $("#replyText").val(replyText);
         $("#replyWriter").val(replyWriter);
     });
 
+    //댓글수정
     $(".modalModBtn").on("click", function(){
         var reply = $(this).parent().parent();
         var replyNo = reply.find("#replyNo").val();
@@ -186,10 +244,10 @@
                     getReplies();// 댓글 목록 출력 함수 호출
                 }
             }
-        })
-
+        });
     });
 
+    //댓글삭제
     $(".modalDelBtn").on("click", function(){
         var replyNo = $(this).parent().parent().find("#replyNo").val();
         $.ajax({
@@ -209,8 +267,7 @@
                     getReplies();// 댓글 목록 출력 함수 호출
                 }
             }
-        })
-
+        });
     });
 
 </script>

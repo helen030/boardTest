@@ -1,6 +1,7 @@
 package demos.common.web.controller;
 
 import demos.common.web.commons.paging.Criteria;
+import demos.common.web.commons.paging.PageMaker;
 import demos.common.web.domain.ArticleVO;
 import demos.common.web.domain.ReplyVO;
 import demos.common.web.persistence.ArticleService;
@@ -15,7 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * # REST 방식에서 쓰이는 주요 애너테이션들
@@ -105,4 +108,37 @@ public class ReplyController {
         return entity;
     }
 
+    @RequestMapping(value = "/{articleNo}/{page}", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> listPaging(@PathVariable("articleNo") Integer articleNo,
+                                                          @PathVariable("page") Integer page) {
+
+        ResponseEntity<Map<String, Object>> entity = null;
+
+        try {
+
+            Criteria criteria = new Criteria();
+            criteria.setPage(page);
+
+            List<ReplyVO> replies = replyService.listPaging(articleNo, criteria);
+            int repliesCount = replyService.countReply(articleNo);
+
+            PageMaker pageMaker = new PageMaker();
+            pageMaker.setCriteria(criteria);
+            pageMaker.setTotalCount(repliesCount);
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("replies", replies);
+            map.put("pageMake", pageMaker);
+
+            entity = new ResponseEntity<>(map, HttpStatus.OK);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            entity = new ResponseEntity<>(HttpStatus.OK);
+
+        }
+
+        return entity;
+    }
 }

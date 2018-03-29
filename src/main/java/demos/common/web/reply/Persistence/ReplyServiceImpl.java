@@ -1,5 +1,6 @@
 package demos.common.web.reply.Persistence;
 
+import demos.common.web.commons.paging.Criteria;
 import demos.common.web.domain.ReplyVO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -63,6 +64,16 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     public void removeReply(Integer replyNo) throws Exception {
         replyDAO.delete(replyNo);
+    }
+
+    @Override
+    public List<ReplyVO> listPaging(Integer articleNo, Criteria creteria) throws Exception {
+        return replyDAO.listPaging(articleNo, creteria);
+    }
+
+    @Override
+    public int countReply(Integer articleNo) throws Exception {
+        return replyDAO.countReply(articleNo);
     }
 
 
