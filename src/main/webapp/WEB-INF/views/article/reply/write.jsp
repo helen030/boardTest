@@ -22,40 +22,32 @@
 
         <!-- Main content -->
         <section class="content container-fluid">
-
-
             <div class="col-lg-12">
-                <form role="form" id="writeForm" method="post" action="${path}/article/reply/modify">
+                <form role="form" id="writeForm" method="post" action="${path}/article/paging/search/write">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">게시글 작성</h3>
                         </div>
                         <div class="box-body">
-                            <input type="hidden" name="articleNo" value="${article.articleNo}">
-                            <input type="hidden" name="page" value="${searchCriteria.page}">
-                            <input type="hidden" name="perPageNum" value="${searchCriteria.perPageNum}">
-                            <input type="hidden" name="searchType" value="${searchCriteria.searchType}">
-                            <input type="hidden" name="keyword" value="${searchCriteria.keyword}">
-
                             <div class="form-group">
                                 <label for="title">제목</label>
-                                <input class="form-control" id="title" name="title" placeholder="제목을 입력해주세요" value="${article.title}">
+                                <input class="form-control" id="title" name="title" placeholder="제목을 입력해주세요">
                             </div>
                             <div class="form-group">
                                 <label for="content">내용</label>
                                 <textarea class="form-control" id="content" name="content" rows="30"
-                                          placeholder="내용을 입력해주세요" style="resize: none;">${article.content}</textarea>
+                                          placeholder="내용을 입력해주세요" style="resize: none;"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="writer">작성자</label>
-                                <input class="form-control" id="writer" name="writer" value="${article.writer}" readonly>
+                                <input class="form-control" id="writer" name="writer">
                             </div>
                         </div>
                         <div class="box-footer">
                             <button type="button" class="btn btn-primary"><i class="fa fa-list"></i> 목록</button>
                             <div class="pull-right">
-                                <button type="button" class="btn btn-warning cancelBtn"><i class="fa fa-trash"></i> 취소</button>
-                                <button type="submit" class="btn btn-success modBtn"><i class="fa fa-save"></i> 수정 저장</button>
+                                <button type="reset" class="btn btn-warning"><i class="fa fa-reply"></i> 초기화</button>
+                                <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> 저장</button>
                             </div>
                         </div>
                     </div>
@@ -68,30 +60,6 @@
 </div>
 <!-- ./wrapper -->
 <%@ include file="../../include/plugin_js.jsp"%>
-<script>
-    $(function () {
-
-        var formObj = $("form[role='form']");
-        console.log(formObj);
-
-        $(".modBtn").on("click", function () {
-            formObj.attr("action", "/article/reply/modify");
-            formObj.attr("method", "post");
-            formObj.submit();
-        });
-
-        $(".cancelBtn").on("click", function () {
-            history.go(-1);
-        });
-
-        $(".listBtn").on("click", function () {
-            self.location = "/article/reply/list?page=${searchCriteria.page}"
-                + "&perPageNum=${searchCriteria.perPageNum}"
-                + "&searchType=${searchCriteria.searchType}"
-                + "&keyword=${searchCriteria.keyword}";
-        });
-
-    });
-</script>
 </body>
 </html>
+

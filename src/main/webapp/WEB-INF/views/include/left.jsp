@@ -93,17 +93,21 @@
                 <ul class="treeview-menu">
                     <li><a href="${path}/article/paging/search/write">게시글 작성</a></li>
                     <li><a href="${path}/article/paging/search/list">게시글 목록</a></li>ㅍ
-                </ul>
+                </ul>v
             </li>
 
-            <li><a href="${path}/reply/test"><i class="fa fa-link"></i> <span>Ajax 댓글</span></a></li>
-            <%--<li class="treeview">
-                <a href="c"><i class="fa fa-link"></i> <span>Ajax 댓글</span>
+            <li><a href="${path}/reply/test"><i class="fa fa-link"></i> <span>Ajax 댓글 테스트</span></a></li>
+            <li class="treeview">
+                <a href="#"><i class="fa fa-link"></i> <span>게시판(페이징 + 검색)</span>
                     <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                    </span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
                 </a>
-            </li>--%>
+                <ul class="treeview-menu">
+                    <li><a href="${path}/article/reply/write">게시글 작성</a></li>
+                    <li><a href="${path}/article/reply/list">게시글 목록</a></li>ㅍ
+                </ul>v
+            </li>
         </ul>
         <!-- /.sidebar-menu -->
     </section>

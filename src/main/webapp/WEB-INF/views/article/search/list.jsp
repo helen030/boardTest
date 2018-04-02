@@ -113,7 +113,7 @@
         </section>
         <!-- /.content -->
     </div>
-    <%@ include file="../../include/footer.jsp"%>ㅍ
+    <%@ include file="../../include/footer.jsp"%>
 </div>
 <!-- ./wrapper -->
 <%@ include file="../../include/plugin_js.jsp"%>

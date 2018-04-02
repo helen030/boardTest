@@ -47,7 +47,7 @@
                                     <%--<td><a href="${path}/article/read?articleNo=${article.articleNo}">${article.title}</a></td>--%>
 
                                     <%-- 파라미터 를 UriComponentsBuilder 를 이용한  방식으로 보냄 --%>
-                                    <td><a href="${path}/article/paging/read${pageMaker.makeQuery(pageMaker.criteria.page)}&articleNo=${article.articleNo}">${article.title}</a></td>
+                                    <td><a href="${path}/article/reply/read${pageMaker.makeQuery(pageMaker.criteria.page)}&articleNo=${article.articleNo}">${article.title}</a></td>
 
                                     <td>${article.writer}</td>
                                     <td><fmt:formatDate value="${article.regDate}" pattern="yyyy-MM-dd a HH:mm"/></td>
@@ -59,62 +59,44 @@
                     </div>
                     <div class="box-footer">
                         <div class="text-center">
-                            <p> 1. 파라미터 를 get 방식으로 보냄 </p>
-                            <%-- 주소 창에 page 만 보임
-                            <ul class="pagination ">
-                                <c:if test="${pageMaker.prev}">
-                                    <li><a href="${path}/article/listPaging?page=${pageMaker.startPage - 1}">이전</a></li>
-                                </c:if>
-                                <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
-                                    <li <c:out value="${pageMaker.criteria.page == idx ? 'class=active' : ''}"/>>
-                                        <a href="${path}/article/listPaging?page=${idx}">${idx}</a>
-                                    </li>
-                                </c:forEach>
-                                <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                    <li><a href="${path}/article/listPaging?page=${pageMaker.endPage + 1}">다음</a></li>
-                                </c:if>
-                            </ul>--%>
-
-                            <p> 2. 파라미터 를 UriComponentsBuilder 를 이용한 방식으로 보냄 </p>
-                            <%-- 주소 창에 page, perPageNum 이 같이 연동됨 --%>
                             <ul class="pagination">
                                 <c:if test="${pageMaker.prev}">
-                                    <li><a href="${path}/article/paging/list${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전</a></li>
+                                    <li><a href="${path}/article/reply/list${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전</a></li>
                                 </c:if>
                                 <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
                                     <li <c:out value="${pageMaker.criteria.page == idx ? 'class=active' : ''}"/>>
-                                        <a href="${path}/article/paging/list${pageMaker.makeQuery(idx)}">${idx}</a>
+                                        <a href="${path}/article/reply/list${pageMaker.makeQuery(idx)}">${idx}</a>
                                     </li>
                                 </c:forEach>
                                 <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                    <li><a href="${path}/article/paging/list${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음</a></li>
+                                    <li><a href="${path}/article/reply/list${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음</a></li>
                                 </c:if>
                             </ul>
-
-                            <p> 3. 파라미터 를 javascript 를 이용한 방식으로 보냄 </p>
-                            <%-- 3. 페이지에서 일어나는 이벤트 를 제어 하므로 href 의 속성을 단순히 페이지번호만을 의미하도록 변경하여야 한다. --%>
-                            <%--<ul class="pagination">
-                                <c:if test="${pageMaker.prev}">
-                                    <li><a href="${pageMaker.startPage - 1}">이전</a></li>
-                                </c:if>
-                                <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
-                                    <li <c:out value="${pageMaker.criteria.page == idx ? 'class=active' : ''}"/>>
-                                        <a href="${idx}">${idx}</a>
-                                    </li>
-                                </c:forEach>
-                                <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                                    <li><a href="${pageMaker.endPage + 1}">다음</a></li>
-                                </c:if>
-                            </ul>--%>
-                            <%-- 3. 자바스크립트를 이용 할 경우 page와 perPageNum값을 넘겨주도록 한다  --%>
-                            <%--<form id="listPageForm">
-                                <input type="hidden" name="page" value="${pageMaker.criteria.page}">
-                                <input type="hidden" name="perPageNum" value="${pageMaker.criteria.perPageNum}">
-                            </form>--%>
-
+                        </div>
+                        <%-- 검색창 영역 --%>
+                        <div class="form-group col-sm-2">
+                            <select class="form-control" name="searchType" id="searchType">
+                                <option value="n" <c:out value="${searchCriteria.searchType == null ? 'selected' : ''}"/>>:::::: 선택 ::::::</option>
+                                <option value="t" <c:out value="${searchCriteria.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
+                                <option value="c" <c:out value="${searchCriteria.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
+                                <option value="w" <c:out value="${searchCriteria.searchType eq 'w' ? 'selected' : ''}"/>>작성자</option>
+                                <option value="tc" <c:out value="${searchCriteria.searchType eq 'tc' ? 'selected' : ''}"/>>제목+내용</option>
+                                <option value="cw" <c:out value="${searchCriteria.searchType eq 'cw' ? 'selected' : ''}"/>>내용+작성자</option>
+                                <option value="tcw" <c:out value="${searchCriteria.searchType eq 'tcw' ? 'selected' : ''}"/>>제목+내용+작성자</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-10">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="keyword" id="keywordInput" value="${searchCriteria.keyword}" placeholder="검색어">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-primary btn-flat" id="searchBtn">
+                                        <i class="fa fa-search"></i> 검색
+                                    </button>
+                                </span>
+                            </div>
                         </div>
 
-
+                        <%-- 글쓰기 버튼 --%>
                         <div class="pull-right">
                             <button type="button" class="btn btn-success btn-flat" id="writeBtn">
                                 <i class="fa fa-pencil"></i> 글쓰기
@@ -126,7 +108,7 @@
         </section>
         <!-- /.content -->
     </div>
-    <%@ include file="../../include/footer.jsp"%>ㅍ
+    <%@ include file="../../include/footer.jsp"%>
 </div>
 <!-- ./wrapper -->
 <%@ include file="../../include/plugin_js.jsp"%>
@@ -142,7 +124,7 @@
 
     $(function(){
         $(".btn-flat").on("click", function () {
-            self.location = "/article/paging/write"
+            self.location = "/article/reply/write"
         });
 
 
@@ -156,6 +138,14 @@
             listPageForm.submit();
         });
         --%>
+
+        <%-- 키워드 검색 --%>
+        $("#searchBtn").on("click", function (event) {
+            self.location =
+                "/article/reply/list${pageMaker.makeQuery(1)}"
+                + "&searchType=" + $("select option:selected").val()
+                + "&keyword=" + encodeURIComponent($("#keywordInput").val());
+        });
     })
 
 </script>

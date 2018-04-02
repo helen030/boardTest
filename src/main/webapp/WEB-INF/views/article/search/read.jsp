@@ -71,8 +71,8 @@
                         <form role="form" method="post">
                             <input type="hidden" name="articleNo" value="${article.articleNo}">
                             <%-- 목록페이지의 정보를 저장하기위해  JSP 추가 --%>
-                            <input type="hidden" name="page" value="${criteria.page}">
-                            <input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
+                            <input type="hidden" name="page" value="${searchCriteria.page}">
+                            <input type="hidden" name="perPageNum" value="${searchCriteria.perPageNum}">
                             <%-- 키워드 검색 추가 --%>
                             <input type="hidden" name="searchType" value="${searchCriteria.searchType}">
                             <input type="hidden" name="keyword" value="${searchCriteria.keyword}">
